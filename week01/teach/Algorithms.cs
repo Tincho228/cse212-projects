@@ -30,7 +30,7 @@ public static class Algorithms {
     }
 
     /// <summary>
-    /// The count variable is keeping track of the amount
+    /// The count variable is keeping track of the amount - n
     /// of work done in the function.  When the function is 
     /// done the count is returned.
     /// </summary>

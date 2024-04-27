@@ -1,8 +1,17 @@
+using System.Dynamic;
+
 public static class ArraysTester {
     /// <summary>
     /// Entry point for the tests
     /// </summary>
     public static void Run() {
+
+        // I had to write this lines on my project to change the decimal separator from ',' to '.'
+        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        
+
         // Sample Test Cases (may not be comprehensive)
         Console.WriteLine("\n=========== PROBLEM 1 TESTS ===========");
         double[] multiples = MultiplesOf(7, 5);
@@ -35,11 +44,18 @@ public static class ArraysTester {
     private static double[] MultiplesOf(double number, int length)
     {
         // TODO Problem 1 Start
+        double[] numbers = new double[length]; // 1- Create an array of doubles called numbers with a length required in the function.
+        for (int i = 0; i < length; ++i) // 2- Create a loop with the length of the array
+        {
+            numbers[i] = (i+1) *  number; // 3- Assign each value of the array, multiplying the increment variable (i) with the number.
+                                        // The index array starts in 0 (i)
+                                        // The multiple of the number start in 1 (i+1)
+        }
+        return numbers; // return the array
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
-
-        return new double[0]; // replace this return statement with your own
+        
     }
     
     /// <summary>
@@ -52,10 +68,14 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
+        List<int> right_array = new List<int>(); // 1- Create a new array that will contain the arrat to move. 
+        right_array = data.GetRange(data.Count()-amount,amount); // 2- Collect the data to rotate.
+        data.RemoveRange(data.Count()-amount, amount); // 3- Remove the data to rotate from the dinamic array
+        data.InsertRange(0,right_array); // 4- Insert the data to rotate into de dinamic array from position 0.
+        
         // TODO Problem 2 Start
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
-
     }
 }
