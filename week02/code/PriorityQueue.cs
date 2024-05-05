@@ -16,20 +16,24 @@
     public String Dequeue() {
         if (_queue.Count == 0) // Verify the queue is not empty
         {
-            Console.WriteLine("The queue is empty.");
+            Console.WriteLine("Error, the queue is empty.");
             return null;
         }
-
-        // Find the index of the item with the highest priority to remove
-        var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++) {
-            if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
-                highPriorityIndex = index;
+        else // Adding else statement to show different messages.
+        {
+            // Find the index of the item with the highest priority to remove
+            var highPriorityIndex = 0;
+            for (int index = 1; index < _queue.Count - 1; index++) { // Defect- Erase equal sign
+                if (_queue[index].Priority > _queue[highPriorityIndex].Priority)
+                    highPriorityIndex = index;
+            }
+            // Remove and return the item with the highest priority
+            var value = _queue[highPriorityIndex].Value;
+             _queue.RemoveAt(highPriorityIndex); // Defect - Remove item missing
+            return value;
         }
 
-        // Remove and return the item with the highest priority
-        var value = _queue[highPriorityIndex].Value;
-        return value;
+        
     }
 
     public override string ToString() {
