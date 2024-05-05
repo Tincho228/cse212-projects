@@ -31,18 +31,21 @@ public class TakingTurnsQueue {
     /// </summary>
     public void GetNextPerson() {
         if (_people.IsEmpty())
-            Console.WriteLine("No one in the queue.");
+            Console.WriteLine("Error, the queue is empty.");
+
         else {
             Person person = _people.Dequeue();
+            if (person.Turns <= 0) {
+                _people.Enqueue(person); // People with forever turns
+            }
             if (person.Turns > 1) {
                 person.Turns -= 1;
                 _people.Enqueue(person);
             }
-
+            
             Console.WriteLine(person.Name);
         }
     }
-
     public override string ToString() {
         return _people.ToString();
     }

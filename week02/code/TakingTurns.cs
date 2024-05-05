@@ -12,10 +12,11 @@
         players.AddPerson("Bob", 2);
         players.AddPerson("Tim", 5);
         players.AddPerson("Sue", 3);
-        // Console.WriteLine(players);    // This can be un-commented out for debug help
-        while (players.Length > 0)
-            players.GetNextPerson();
-        // Defect(s) Found: 
+        //Console.WriteLine(players);    // This can be un-commented out for debug help
+        while (players.Length > 0){
+                players.GetNextPerson();
+        }
+        // Defect(s) Found: _queue.Add(person); Defect #1 Put the names at the end of the list.
 
         Console.WriteLine("---------");
 
@@ -30,7 +31,6 @@
         players.AddPerson("Sue", 3);
         for (int i = 0; i < 5; i++) {
             players.GetNextPerson();
-            // Console.WriteLine(players);
         }
 
         players.AddPerson("George", 3);
@@ -38,7 +38,7 @@
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        // Defect(s) Found: Nothing found.
 
         Console.WriteLine("---------");
 
@@ -54,9 +54,9 @@
         // Console.WriteLine(players);
         for (int i = 0; i < 10; i++) {
             players.GetNextPerson();
-            // Console.WriteLine(players);
+            //Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: Ask if the Person has forever turns and enqueue it again.
 
         Console.WriteLine("---------");
 
@@ -68,12 +68,12 @@
         players = new TakingTurnsQueue();
         players.AddPerson("Tim", -3);
         players.AddPerson("Sue", 3);
-        // Console.WriteLine(players);
+        //Console.WriteLine(players);
         for (int i = 0; i < 10; i++) {
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: Include turns less than 0. 
 
         Console.WriteLine("---------");
 
