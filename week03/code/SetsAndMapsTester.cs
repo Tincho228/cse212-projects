@@ -143,9 +143,15 @@ public static class SetsAndMapsTester {
         var degrees = new Dictionary<string, int>();
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
-            // Todo Problem 2 - ADD YOUR CODE HERE
+            var degreeName = fields[3];
+            if(degrees.ContainsKey(degreeName))
+            {
+                degrees[degreeName] += 1;
+            }
+            else {
+                degrees[degreeName] = 1;
+            }
         }
-
         return degrees;
     }
 
