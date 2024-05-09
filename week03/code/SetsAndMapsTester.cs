@@ -111,6 +111,18 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        var pairs = new HashSet<string>();
+        foreach (string word in words)
+        {    
+            char[] charArray = word.ToCharArray();
+            Array.Reverse(charArray);
+            var pos = Array.IndexOf(words,new string(charArray)); // Checking that letters are not the same.
+            if(!pairs.Contains(new string(charArray)) && !pairs.Contains(word) && (pos > -1) && (charArray[0] != charArray[1])){
+                pairs.Add(word);
+                pairs.Add(new string(charArray));
+                Console.WriteLine($"{word} & {new String(charArray)}");
+            }
+        }
     }
 
     /// <summary>
