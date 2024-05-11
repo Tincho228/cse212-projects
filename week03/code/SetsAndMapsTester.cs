@@ -55,24 +55,24 @@ public static class SetsAndMapsTester {
         Dictionary<ValueTuple<int, int>, bool[]> map = SetupMazeMap();
         var maze = new Maze(map);
         maze.ShowStatus(); // Should be at (1,1)
-        maze.MoveUp(); // Error
-        maze.MoveLeft(); // Error
-        maze.MoveRight();
+        maze.MoveUp(); // Error (1,1)
+        maze.MoveLeft(); // Error (1,1)
+        maze.MoveRight(); // (2,1)
         maze.MoveRight(); // Error
-        maze.MoveDown();
-        maze.MoveDown();
-        maze.MoveDown();
-        maze.MoveRight();
-        maze.MoveRight();
-        maze.MoveUp();
-        maze.MoveRight();
-        maze.MoveDown();
-        maze.MoveLeft();
-        maze.MoveDown(); // Error
-        maze.MoveRight();
-        maze.MoveDown();
-        maze.MoveDown();
-        maze.MoveRight();
+        maze.MoveDown(); //(2,2)
+        maze.MoveDown(); //2,3)
+        maze.MoveDown(); //(2,4)
+        maze.MoveRight(); //(3,4)
+        maze.MoveRight(); //(4,4)
+        maze.MoveUp();//(4,3)
+        maze.MoveRight();//(5,3)
+        maze.MoveDown();//(5,4)
+        maze.MoveLeft();//(4,4)
+        maze.MoveDown(); // Error (4,4)
+        maze.MoveRight(); // (5,4)
+        maze.MoveDown();//(5,5)
+        maze.MoveDown();//(5,6)
+        maze.MoveRight();//(6,6)
         maze.ShowStatus(); // Should be at (6,6)
 
         // Problem 5: Earthquake
@@ -176,7 +176,35 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var summaryTable = new Dictionary<char, int>();
+        char[] array1 = word1.ToLower().ToCharArray();
+        Array.Sort(array1);
+        var sorted1 = new string (array1).Trim(); // Trimed, Lower case and sorted array
+        char[] array2 = word2.ToLower().ToCharArray();
+        Array.Sort(array2);
+        var sorted2 = new string (array2).Trim(); // Trimed, Lower case and sorted array
+        if(sorted1.Length != sorted2.Length) // Check if arrays have the same length
+                return false;
+        foreach (char letter in sorted1) // summarize letter in dictionary
+        {
+            // If the letter is not in our summary table yet, add it
+            if (!summaryTable.ContainsKey(letter))
+                summaryTable[letter] = 1;
+            else
+                summaryTable[letter] += 1;
+        }
+        foreach (char letter in sorted2) // compare each letter
+        {
+            if(summaryTable.ContainsKey(letter)){
+                summaryTable[letter] -=1;
+                if(summaryTable[letter] == 0)
+                    summaryTable.Remove(letter);
+            }
+        }
+        if (summaryTable.Count() == 0) // if the dictionary is empty
+            return true;
+        else 
+            return false;
     }
 
     /// <summary>
@@ -184,7 +212,7 @@ public static class SetsAndMapsTester {
     /// </summary>
     private static Dictionary<ValueTuple<int, int>, bool[]> SetupMazeMap() {
         Dictionary<ValueTuple<int, int>, bool[]> map = new() {
-            { (1, 1), new[] { false, true, false, true } },
+            { (1, 1), new[] { false, true, false, true } }, //  (left, right, up, down)
             { (1, 2), new[] { false, true, true, false } },
             { (1, 3), new[] { false, false, false, false } },
             { (1, 4), new[] { false, true, false, true } },
@@ -246,12 +274,15 @@ public static class SetsAndMapsTester {
         using var reader = new StreamReader(jsonStream);
         var json = reader.ReadToEnd();
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
-
+        foreach(var feature in featureCollection.features){
+            Console.WriteLine($"Place: {feature.properties.place} - Mag: {feature.properties.mag}");
+        }
         // TODO:
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        
+        
     }
 }
