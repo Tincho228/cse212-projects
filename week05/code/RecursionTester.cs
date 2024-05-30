@@ -314,11 +314,13 @@ public static class RecursionTester {
             if (maze.IsEnd(x,y)){ 
                 Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
             }
-            else {    
+            else {   
+                List<ValueTuple<int, int>> moveRight = new List<ValueTuple<int, int>>(); 
+                moveRight.Add((x,y));
                 SolveMaze(maze,x-1,y,currPath); //Move left
                 SolveMaze(maze,x,y-1,currPath); //Move up
                 SolveMaze(maze,x,y+1,currPath); //Move down
-                SolveMaze(maze,x+1,y,currPath); //Move right 
+                SolveMaze(maze,x+1,y,moveRight); //Move right 
             } 
         } 
         
